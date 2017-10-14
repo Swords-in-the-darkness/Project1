@@ -68,7 +68,7 @@ $.ajax(setting).done(function (response) {
 // Link to Stream
     var movieStream = $("<a>");
     var movieStreamURL = ("http://www.canistream.it/search/movie/" + encodedMov);
-      movieStream.addClass("btn btn-stream btn-md btn-warning");
+      movieStream.addClass("btn btn-stream btn-sm btn-primary");
       movieStream.attr("role", "button")
       movieStream.attr("target", "_blank")
       movieStream.attr("href", movieStreamURL);
