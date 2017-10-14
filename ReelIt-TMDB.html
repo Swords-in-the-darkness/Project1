@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <title>Reel It</title>
+  <meta charset="utf-8" content="width=device-width" initial-scale="1.0" name="viewport">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron well-sm text-center">
+      <h1>Reel It</h1>
+    </div>
+
+
+    <form id="movie-form" name="movie-form">
+      <!-- change movie-input to movieTitle or ID on other search form -->
+      <label for="movie-input"></label> 
+      <input class="form-control" id="movie-input" type="text">
+      <input class="form-control" id="submitButton" type="submit" value="Search">
+    </form>
+
+
+    <div class="panel panel-default" id="movies-view">
+    </div>
+  </div>
+
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"> </script> 
+<script type = "text/javascript">
+
+$("#submitButton").on("click", function(event) {
+  event.preventDefault();
+  var movie = $("#movie-input").val().trim();
+  var encodedMov = encodeURIComponent(movie);
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://api.themoviedb.org/3/search/movie?&query=" + encodedMov +
+      "&api_key=e78bedc80954fdbe9d13505b16448776",
+    "method": "GET",
+  };
+  $.ajax(settings).done(function(response) {
+    console.log(response);
+
+// Generate Movie Div
+    var movieDiv = $("<div class='movie'>");
+
+// Movie ID
+    var movieID = response.results[0].id;
+    console.log("ID: " + movieID);
+
+// Movie URL (through TMDB)
+    var movieURL = settings.url;
+    console.log("movieURL: " + movieURL);
+
+// Movie Title
+    var title = response.results[0].title;
+    console.log("title: " + title);
+    var movieTitleDisplay = $("<h2>").text(title);
+    movieDiv.append(movieTitleDisplay);
+
+// Movie Review/Score
+    var rating = response.results[0].vote_average;
+    var movieRatingDisplay = $("<p>").text("Rating: " + rating);
+    movieDiv.append(movieRatingDisplay);
+
+// Movie Released Date
+    var released = response.results[0].release_date;
+    console.log("released: " + released)
+    var movieDateDisplay = $("<p>").text("Released: " + released);
+    movieDiv.append(movieDateDisplay);
+
+// Movie Plot
+    var plot = response.results[0].overview;
+    var moviePlotDisplay = $("<p>").text("Plot: " + plot);
+    movieDiv.append(moviePlotDisplay);
+
+// Movie Image (poster or backdrop)
+    var imgURL = "https://image.tmdb.org/t/p/w500/" + response.results[0].poster_path;
+    var image = $("<img>").attr("src", imgURL);
+    image.addClass("img-responsive");
+    movieDiv.append(image);
+    
+
+ // Prepend Movie
+    $("#movies-view").prepend(movieDiv);
+  });
+});
+</script>
+
+</body>
+</html>
+
+
