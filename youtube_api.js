@@ -157,4 +157,6 @@ function showResults(results){ //shows the results to the user
 }
 
 $("<img>").addClass("img img-responsive");
+$("<a>").attr("target", "_blank");
+
 });

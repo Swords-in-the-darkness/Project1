@@ -113,7 +113,7 @@ $.ajax(setting).done(function (response) {
 
 // Link to Stream
     var movieStream = $("<a>");
-    var movieStreamURL = ("https://www.fan.tv/movies/" + movieID);
+    var movieStreamURL = ("http://www.canistream.it/search/movie/" + encodedMov);
       movieStream.addClass("btn btn-stream btn-sm btn-primary");
       movieStream.attr("role", "button")
       movieStream.attr("target", "_blank")
